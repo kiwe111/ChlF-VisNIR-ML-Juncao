@@ -1,54 +1,80 @@
 # ChlF-VisNIR-ML-Juncao
 
-This repository contains the code for the paper:
-
-**"A Rapid and Nondestructive Method for Assessing Low-Temperature Stress Severity and Predicting Fv/Fm in Juncao Seedlings Using Spectroscopic Analysis and Machine Learning"**
-
-## 🌱 Project Overview
-
-Low-temperature stress is a critical environmental factor limiting the growth of **Juncao (Cenchrus fungigraminus)**, a tropical C4 plant with poor cold tolerance. This project proposes a **rapid, nondestructive** method to classify stress severity and predict the chlorophyll fluorescence parameter **Fv/Fm** using:
-
-- 🌿 **Chlorophyll a fluorescence (ChlF)**
-- 🌈 **Visible-Near Infrared (Vis-NIR) spectroscopy**
-- 🤖 **Machine learning algorithms**
-
 ---
 
-## 📊 Code Modules
+## 🧠 Code Modules
 
 ### `cluster_analysis.py`
 
-> **Function:** Automatically determine the optimal number of clusters for stress severity classification, and visualize K-Means clustering using t-SNE.
+> Automatically determines the optimal number of clusters for stress classification and visualizes results using t-SNE.
 
-- Input: Preprocessed physiological data (e.g., OJIP, SOD, SPAD, etc.)
-- Techniques used:
-  - **t-SNE** dimensionality reduction
-  - **KMeans clustering**
-  - **Silhouette score**, **Calinski-Harabasz Index**
+- 📥 **Input:** Physiological data (e.g., OJIP, SPAD, SOD)
+- 🔧 **Methods:**
+  - `t-SNE` for nonlinear dimensionality reduction
+  - `KMeans` clustering
+  - Cluster evaluation via **Silhouette Score** & **Calinski-Harabasz Index**
   - Cluster visualization with confidence ellipses
-- Output:
-  - Cluster assignment (`tsne_cluster_data.csv`)
-  - Silhouette metrics (`silhouette_data.csv`)
-  - Optimal cluster metrics (`sse_ch_data.csv`)
-  - Ellipse parameters for confidence intervals
+- 📤 **Output files:**
+  - `tsne_cluster_data.csv`
+  - `silhouette_data.csv`
+  - `sse_ch_data.csv`
+  - `confidence_ellipses.csv`
 
 ### `shap_analysis.py`
 
-> **Function:** Train an XGBoost model to classify clusters and apply SHAP to interpret which features contributed most to classification.
+> Classifies clusters using XGBoost and interprets feature importance via SHAP values.
 
-- Input: Cluster labels + physiological features
-- Techniques used:
-  - **XGBoost multi-class classification**
-  - **SHAP (Shapley Additive Explanations)**
-  - **Pearson correlation analysis**
-- Output:
-  - SHAP bar plots and summary plots
-  - Confusion matrix and classification report
-  - CSV/Excel of feature importance and SHAP contributions
+- 📥 **Input:** Cluster labels + selected physiological features
+- 🔧 **Methods:**
+  - `XGBoost` multi-class classifier
+  - `SHAP` (Shapley Additive Explanations)
+  - `Pearson` correlation analysis
+- 📤 **Output:**
+  - SHAP plots & summary
+  - Confusion matrix and classification metrics
+  - Feature importance CSVs/Excels:
+    - `shap_contribution_sorted.xlsx`
+    - `shap_contribution_centers.xlsx`
+    - `pearson_correlation.csv`
 
 ---
 
-## 📂 Example File Paths (for Linux)
+## 🧪 Traditional ML & DL Models (MATLAB)
 
-```python
-file_path = "/home/xqw/0326.xlsx"  # Replace with your data path
+For full spectral modeling and Fv/Fm prediction, we provide MATLAB implementations of traditional machine learning and deep learning models.
+
+### 🔎 Stress Severity Classification
+
+Implemented in MATLAB R2022b:
+
+- 📊 Models: `LDA`, `PLS-DA`, `RF`, `LS-SVM`, `BPNN`, `ELM`, `1D-CNN`
+- 🔍 Feature selection: `CARS`, `Random Frog`, `Kennard-Stone`
+- 📂 Files to run:
+  - `ks.m`, `CARS_Feature selection.m`, `Random frog_Feature selection.m`
+  - `*_Stress severity_Identifying.m`
+
+### 📈 Fv/Fm Regression Models
+
+- 📊 Models: `MLR`, `PLSR`, `RF`, `ELM`, `LS-SVR`, `BPNN`, `1D-CNN`
+- 📂 Files to run:
+  - `MLR_FvFm_Predicting.m`, `PLSR_FvFm_Predicting.m`, ...
+  - All follow similar naming structure.
+
+---
+
+## 💾 Raw Data
+
+- `Date-Stress severity-Identifying.xlsx`: Physiological feature matrix + labels
+- `Date-FvFm-Predicting.xlsx`: Vis-NIR spectra + Fv/Fm values
+- `Date-Chlorophyll fluorescence parameters.xlsx`: Raw OJIP and SPAD signals
+
+---
+
+## 🛠 Environment
+
+- **Python Version:** 3.9+
+- **Key Libraries:** `xgboost`, `shap`, `sklearn`, `matplotlib`, `seaborn`, `pandas`
+- **MATLAB Version:** R2022b
+- **System:** Windows 11, Intel Core i7-12650H (16 CPUs, 2.3 GHz)
+
+---
