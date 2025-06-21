@@ -20,7 +20,7 @@
   - `sse_ch_data.csv`
   - `confidence_ellipses.csv`
 
-### `shap_analysis.py`
+### `shap.py`
 
 > Classifies clusters using XGBoost and interprets feature importance via SHAP values.
 
